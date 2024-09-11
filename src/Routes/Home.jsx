@@ -2,13 +2,13 @@ import Card from "../Components/Card";
 import { useGlobalContext } from "../Context/Context";
 
 const Home = () => {
-  const { dentists } = useGlobalContext();
+  const { state } = useGlobalContext();
 
   return (
     <main className="">
       <h1>Home</h1>
       <div className="card-grid">
-        {dentists.map((dentist) => (
+        {state.data.map((dentist) => (
           <Card
             key={dentist.id}
             name={dentist.name}

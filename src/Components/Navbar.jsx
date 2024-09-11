@@ -3,24 +3,23 @@ import { routes } from "../Routes";
 import { useGlobalContext } from "../Context/Context";
 
 const Navbar = () => {
-  const { theme, dispatch, setTheme } = useGlobalContext();
+  const { state, dispatch } = useGlobalContext();
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
+    const newTheme = state.theme === "light" ? "dark" : "light";
     dispatch({ type: "changeTheme", payload: newTheme });
   };
 
   return (
     <nav>
-      <div className={`nav-links ${theme}`}>
+      <div className={`nav-links ${state.theme}`}>
         <Link to={routes.home}>HOME</Link>
         <Link to={routes.contact}>CONTACT</Link>
         <Link to={routes.favs}>FAVORITES</Link>
       </div>
-      <button className={`theme-btn ${theme}`} onClick={toggleTheme}>
+      <button className={`theme-btn ${state.theme}`} onClick={toggleTheme}>
         <p>Change theme</p>
-        {theme === "light" ? (
+        {state.theme === "light" ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -43,10 +42,10 @@ const Navbar = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-sun"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-sun"
           >
             <circle cx="12" cy="12" r="4" />
             <path d="M12 2v2" />

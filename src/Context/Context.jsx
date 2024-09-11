@@ -26,7 +26,7 @@ const switchState = (state, action) => {
     case "removeFav":
       return {
         ...state,
-        favs: state.favs.filter((fav) => fav !== action.payload),
+        favs: state.favs.filter((fav) => fav.id !== action.payload.id),
       };
     default:
       return state;
@@ -34,30 +34,21 @@ const switchState = (state, action) => {
 };
 
 const GlobalProvider = ({ children }) => {
-  const [theme, setTheme] = useState(initialState.theme);
-  const [dentists, setDentists] = useState(initialState.data);
-  const [favs, setFavs] = useState(initialState.favs);
   const [state, dispatch] = useReducer(switchState, initialState);
 
   const URL = "https://jsonplaceholder.typicode.com/users";
 
   useEffect(() => {
     axios(URL).then((response) => {
-      setDentists(response.data);
+      dispatch({ type: "changeData", payload: response.data });
     });
   }, []);
 
   return (
     <GlobalContext.Provider
       value={{
-        theme,
-        setTheme,
         state,
         dispatch,
-        dentists,
-        favs,
-        setFavs,
-        setDentists,
       }}
     >
       {children}

@@ -44,7 +44,7 @@ const Form = () => {
   return (
     <div className="form-container">
       <form>
-        <label for="name">Nombre completo</label>
+        <label htmlFor="name">Nombre completo</label>
         <input
           type="text"
           name="name"
@@ -52,7 +52,7 @@ const Form = () => {
           value={form.name}
           onChange={handleChange}
         />
-        <label for="email">Email</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           name="email"
@@ -60,7 +60,7 @@ const Form = () => {
           value={form.email}
           onChange={handleChange}
         />
-        <label for="phone">Teléfono</label>
+        <label htmlFor="phone">Teléfono</label>
         <input
           type="tel"
           name="phone"

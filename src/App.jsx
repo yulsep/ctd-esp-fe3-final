@@ -9,10 +9,10 @@ import Favs from "./Routes/Favs";
 import { useGlobalContext } from "./Context/Context";
 
 function App() {
-  const { theme } = useGlobalContext();
+  const { state } = useGlobalContext();
 
   return (
-    <div className={`App ${theme}`}>
+    <div className={`App ${state.theme}`}>
       <Navbar />
       <div className="content">
         <Routes>

@@ -1,28 +1,25 @@
+import { useState } from "react";
 import { routes } from "../Routes";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../Context/Context";
 
 const Card = ({ name, username, id }) => {
-  const { theme } = useGlobalContext();
+  const { state, dispatch } = useGlobalContext();
 
-  /*   const addFav = (id) => {
-    dispatch({ type: "addFav", payload: id });
+  const [isFavorite, setIsFavorite] = useState(
+    state.favs.some((fav) => fav.id === id)
+  );
+
+  const handleChangeFav = () => {
+    dispatch({
+      type: isFavorite ? "removeFav" : "addFav",
+      payload: isFavorite ? id : { id, name, username },
+    });
+    setIsFavorite(!isFavorite);
   };
-
-  const removeFav = (id) => {
-    dispatch({ type: "removeFav", payload: id });
-  };
-
-  const handleChangeFav = (id) => {
-    if (favs.includes(id)) {
-      removeFav(id);
-    } else {
-      addFav(id);
-    }
-  }; */
 
   return (
-    <div className={`card ${theme}`}>
+    <div className={`card ${state.theme}`}>
       <Link to={routes.detail.replace(":id", id)}>
         {/* En cada card deberan mostrar en name - username y el id */}
         <img
@@ -39,7 +36,9 @@ const Card = ({ name, username, id }) => {
 
         {/* Ademas deberan integrar la logica para guardar cada Card en el localStorage */}
       </Link>
-      <button className={`favButton ${theme}`}>Add fav</button>
+      <button className={`favButton ${state.theme}`} onClick={handleChangeFav}>
+        {isFavorite ? "Remover de favoritos" : "Agregar a favoritos"}
+      </button>
     </div>
   );
 };
