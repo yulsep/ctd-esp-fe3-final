@@ -27,11 +27,7 @@ const Card = ({ name, username, id }) => {
   return (
     <div className={`card ${state.theme}`}>
       <Link to={routes.detail.replace(":id", id)}>
-        <img
-          className="card-img"
-          src="../../public/images/doctor.jpg"
-          alt="dentist"
-        />
+        <img className="card-img" src="./images/doctor.jpg" alt="dentist" />
         <p>
           {name} - {id}
         </p>
