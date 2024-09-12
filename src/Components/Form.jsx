@@ -7,14 +7,14 @@ const Form = () => {
     phone: "",
   });
 
-  const [error, setError] = useState("");
-
+  const [areErrors, setAreErrors] = useState(false);
+  const [success, setSuccess] = useState(false);
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const validateName = (name) => {
-    return name.trim().length >= 5 && !name.trim().includes(" ");
+    return name.trim().length >= 5;
   };
 
   const validateEmail = (email) => {
@@ -29,15 +29,20 @@ const Form = () => {
       email: "",
       phone: "",
     });
-    setError("");
+    setAreErrors(false);
+    setSuccess(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateName(form.name) && validateEmail(form.email)) {
-      setError("");
+      console.log(form);
+
+      setAreErrors(false);
+      setSuccess(true);
     } else {
-      setError("Por favor verifique su información nuevamente");
+      setAreErrors(true);
+      setSuccess(false);
     }
   };
 
@@ -68,7 +73,7 @@ const Form = () => {
           value={form.phone}
           onChange={handleChange}
         />
-        <section>
+        <section className="form-buttons">
           <button type="submit" onClick={handleSubmit}>
             Enviar
           </button>
@@ -76,8 +81,17 @@ const Form = () => {
             Limpiar
           </button>
         </section>
+        {areErrors && (
+          <p className="error-message">
+            Por favor verifique su información nuevamente
+          </p>
+        )}
+        {success && (
+          <p className="success-message">
+            Gracias {form.name}, te contactaremos cuando antes vía mail.
+          </p>
+        )}
       </form>
-      {error && <p>{error}</p>}
     </div>
   );
 };

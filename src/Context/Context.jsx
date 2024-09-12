@@ -1,40 +1,19 @@
-import {
-  createContext,
-  useContext,
-  useReducer,
-  useState,
-  useEffect,
-} from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import axios from "axios";
+import { reducer } from "../reducers/reducer";
 
 const GlobalContext = createContext(null);
+
+const storageFavs = localStorage.getItem("favs");
 
 const initialState = {
   theme: "light",
   data: [],
-  favs: [],
-};
-
-const switchState = (state, action) => {
-  switch (action.type) {
-    case "changeTheme":
-      return { ...state, theme: action.payload };
-    case "changeData":
-      return { ...state, data: action.payload };
-    case "addFav":
-      return { ...state, favs: [...state.favs, action.payload] };
-    case "removeFav":
-      return {
-        ...state,
-        favs: state.favs.filter((fav) => fav.id !== action.payload.id),
-      };
-    default:
-      return state;
-  }
+  favs: storageFavs ? JSON.parse(storageFavs) : [],
 };
 
 const GlobalProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(switchState, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const URL = "https://jsonplaceholder.typicode.com/users";
 
@@ -43,6 +22,10 @@ const GlobalProvider = ({ children }) => {
       dispatch({ type: "changeData", payload: response.data });
     });
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favs", JSON.stringify(state.favs));
+  }, [state.favs]);
 
   return (
     <GlobalContext.Provider
